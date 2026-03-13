@@ -371,9 +371,9 @@ Rotation drift rate:        167.06 deg/100m
 
 ### Trajectory Comparison
 
-![Trajectory Evaluation](5E525198FD82AEE3E481265824ED2D60.png)
+![Trajectory Evaluation](figures/trajectory_evaluation.png)
 
-This figure is generated from the same inputs used for evaluation (`ground_truth.txt` and `CameraTrajectory.txt`) and includes:
+This figure is generated from the same inputs used for evaluation (`groundtruth.txt` and `KeyFrameTrajectory.txt`), and includes:
 
 1. **Top-Left**: 2D trajectory before alignment (matched poses only). This reveals scale/rotation mismatch typical for monocular VO.
 2. **Top-Right**: 2D trajectory after Sim(3) alignment (scale corrected). Remaining discrepancy reflects drift and local tracking errors.
