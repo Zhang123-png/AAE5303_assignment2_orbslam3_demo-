@@ -1,4 +1,4 @@
-# AAE5303 Assignment: Visual Odometry with ORB-SLAM3
+# AAE5303 Assignment 2: Monocular Visual Odometry with ORB-SLAM3 (HKisland_GNSS03 Dataset)
 
 <div align="center">
 
@@ -39,10 +39,10 @@ This report presents the implementation and evaluation of **Monocular Visual Odo
 
 | Metric | Value | Description |
 |--------|-------|-------------|
-| **ATE RMSE** | **132.1547 m** | Global accuracy after Sim(3) alignment (scale corrected) |
-| **RPE Trans Drift** | **2.8701 m/m** | Translation drift rate (mean error per meter, delta=10 m) |
-| **RPE Rot Drift** | **173.3319 deg/100m** | Rotation drift rate (mean angle per 100 m, delta=10 m) |
-| **Completeness** | **87.01%** | Matched poses / total ground-truth poses (1701 / 1955) |
+| **ATE RMSE** | **43.05 m** | Global accuracy after Sim(3) alignment (scale corrected) |
+| **RPE Trans Drift** | **2.51 m/m** | Translation drift rate (mean error per meter, delta=10 m) |
+| **RPE Rot Drift** | **16.705663 deg/100m** | Rotation drift rate (mean angle per 100 m, delta=10 m) |
+| **Completeness** | **98.83%** | Matched poses / total ground-truth poses (1701 / 1955) |
 | **Estimated poses** | 2,826 | Trajectory poses in `CameraTrajectory.txt` |
 
 ---
@@ -117,7 +117,7 @@ $$ATE_{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}\|\mathbf{p}_{est}^i - \mathbf{p}_
 
 #### 2. RPE (Relative Pose Error) – Drift Rates
 
-Measures local consistency by comparing relative transformations:
+Measures local consistency by comparing relative transformations (Δd = 10 m for HKisland_GNSS03 dataset):
 
 $$RPE_{trans} = \|\Delta\mathbf{p}_{est} - \Delta\mathbf{p}_{gt}\|$$
 
@@ -303,7 +303,7 @@ Camera.RGB: 0  # OpenCV images are typically BGR by default
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
-| `nFeatures` | 1500 | Features per frame |
+| `nFeatures` | 1000 | Features per frame |
 | `scaleFactor` | 1.2 | Pyramid scale factor |
 | `nLevels` | 8 | Pyramid levels |
 | `iniThFAST` | 20 | Initial FAST threshold |
@@ -330,19 +330,19 @@ Matched Poses: 1,701 / 1,955 (87.01%)  ← Completeness
 
 METRIC 1: ATE (Absolute Trajectory Error)
 ────────────────────────────────────────
-RMSE:   132.1547 m
-Mean:   114.6344 m
-Std:    65.7558 m
+RMSE:   43.047199 m
+Mean:   36.112997 m
+Std:    23.428887 m
 
 METRIC 2: RPE Translation Drift (distance-based, delta=10 m)
 ────────────────────────────────────────
-Mean translational RPE over 10 m: 28.7014 m
-Translation drift rate:           2.8701 m/m
+Mean translational RPE over 10 m: 25.1 m
+Translation drift rate:           2.51 m/m
 
 METRIC 3: RPE Rotation Drift (distance-based, delta=10 m)
 ────────────────────────────────────────
-Mean rotational RPE over 10 m: 17.3332 deg
-Rotation drift rate:        173.3319 deg/100m
+Mean rotational RPE over 10 m: 16.705663 deg
+Rotation drift rate:        167.06 deg/100m
 
 ================================================================================
 ```
@@ -351,19 +351,19 @@ Rotation drift rate:        173.3319 deg/100m
 
 | Parameter | Value |
 |-----------|-------|
-| **Sim(3) scale correction** | 6.5944 |
-| **Sim(3) translation** | [-45.426, -95.559, 36.060] m |
+| **Sim(3) scale correction** | 5.069201528647583 |
+| **Sim(3) translation** | [11775890.3 2472177.23 -31.6127536] m|
 | **Association threshold** | \(t_{max\_diff}\) = 0.1 s |
-| **Association rate (Completeness)** | 87.01% |
+| **Association rate (Completeness)** | 98.83% |
 
 ### Performance Analysis
 
 | Metric | Value | Grade | Interpretation |
 |--------|-------|-------|----------------|
-| **ATE RMSE** | 132.15 m | F | Very large global error after alignment |
-| **RPE Trans Drift** | 2.87 m/m | D | Large local drift per traveled distance |
-| **RPE Rot Drift** | 173.33 deg/100m | F | Severe orientation drift |
-| **Completeness** | 87.01% | B | Many poses can be evaluated, but accuracy is low |
+| **ATE RMSE** | 43.047199m | C | Moderate global error after alignment |
+| **RPE Trans Drift** | 2.51 m/m | C | Moderate local drift per traveled distance |
+| **RPE Rot Drift** | 167.06 deg/100m | E | Severe orientation drift |
+| **Completeness** | 98.83% | A | Nearly all keyframes can be evaluated, excellent system robustness |
 
 ---
 
@@ -371,7 +371,7 @@ Rotation drift rate:        173.3319 deg/100m
 
 ### Trajectory Comparison
 
-![Trajectory Evaluation](figures/trajectory_evaluation.png)
+![Trajectory Evaluation]()
 
 This figure is generated from the same inputs used for evaluation (`ground_truth.txt` and `CameraTrajectory.txt`) and includes:
 
